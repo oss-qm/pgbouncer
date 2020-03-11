@@ -26,7 +26,7 @@ A lightweight connection pooler for PostgreSQL
     --bindir=%{_bindir} \
     --libdir=%{_libdir} \
     --docdir %{_docdir}/%{name}
-make
+make %{?_smp_mflags}
 
 %check
 
