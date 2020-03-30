@@ -106,7 +106,7 @@ static void takeover_load_fd(struct MBuf *pkt, const struct cmsghdr *cmsg)
 	{
 		/* get the fd */
 		memcpy(&fd, CMSG_DATA(cmsg), sizeof(int));
-		log_debug("got fd: %d", fd);
+		log_info("got fd: %d", fd);
 	} else {
 		fatal("broken fd packet");
 	}
@@ -119,7 +119,7 @@ static void takeover_load_fd(struct MBuf *pkt, const struct cmsghdr *cmsg)
 	if (got < 0 || task == NULL || saddr == NULL)
 		fatal("NULL data from old process");
 
-	log_debug("FD row: fd=%d(%d) linkfd=%d task=%s user=%s db=%s enc=%s",
+	log_info("FD row: fd=%d(%d) linkfd=%d task=%s user=%s db=%s enc=%s",
 		  oldfd, fd, linkfd, task,
 		  user ? user : "NULL", db ? db : "NULL",
 		  client_enc ? client_enc : "NULL");
@@ -219,7 +219,7 @@ static void next_command(PgSocket *bouncer, struct MBuf *pkt)
 	if (!mbuf_get_string(pkt, &cmd))
 		fatal("bad result pkt");
 
-	log_debug("takeover_recv_fds: 'C' body: %s", cmd);
+	log_info("takeover_recv_fds: 'C' body: %s", cmd);
 	if (strcmp(cmd, "SUSPEND") == 0) {
 		log_info("SUSPEND finished, sending SHOW FDS");
 		SEND_generic(res, bouncer, 'Q', "s", "SHOW FDS;");
@@ -257,10 +257,10 @@ static void takeover_parse_data(PgSocket *bouncer,
 
 		switch (pkt.type) {
 		case 'T': /* RowDescription */
-			log_debug("takeover_parse_data: 'T'");
+			log_info("takeover_parse_data: 'T'");
 			break;
 		case 'D': /* DataRow */
-			log_debug("takeover_parse_data: 'D'");
+			log_info("takeover_parse_data: 'D'");
 			if (cmsg) {
 				takeover_load_fd(&pkt.data, cmsg);
 				cmsg = CMSG_NXTHDR(msg, cmsg);
@@ -268,10 +268,10 @@ static void takeover_parse_data(PgSocket *bouncer,
 				fatal("got row without fd info");
 			break;
 		case 'Z': /* ReadyForQuery */
-			log_debug("takeover_parse_data: 'Z'");
+			log_info("takeover_parse_data: 'Z'");
 			break;
 		case 'C': /* CommandComplete */
-			log_debug("takeover_parse_data: 'C'");
+			log_info("takeover_parse_data: 'C'");
 			next_command(bouncer, &pkt.data);
 			break;
 		case 'E': /* ErrorMessage */

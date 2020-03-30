@@ -753,9 +753,13 @@ static void takeover_part1(void)
 
 void dns_setup(void)
 {
-	if (adns)
+	log_info("dns_setup()");
+	if (adns) {
+		log_info("already got a adns context");
 		return;
+	}
 	adns = adns_create_context();
+	log_info("created new adns context");
 	if (!adns)
 		fatal("dns setup failed");
 }
