@@ -733,6 +733,7 @@ void config_postprocess(void)
 	statlist_for_each_safe(item, &database_list, tmp) {
 		db = container_of(item, PgDatabase, head);
 		if (db->db_dead) {
+			log_info("config_postprocess() killing DB: %s", db->name);
 			kill_database(db);
 			continue;
 		}

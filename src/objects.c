@@ -1059,6 +1059,10 @@ static void dns_connect(struct PgSocket *server)
 		dns_setup();
 
 		/* launch dns lookup */
+		if (!adns) {
+			slog_noise(server, "xxx no adns context");
+			return;
+		}
 		tk = adns_resolve(adns, db->host, dns_callback, server);
 		if (tk)
 			server->dns_token = tk;

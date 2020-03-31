@@ -761,8 +761,10 @@ static void takeover_part1(void)
 		die("cannot reboot under service manager");
 
 	takeover_init();
-	while (cf_reboot)
+	while (cf_reboot) {
+		log_info("takeover_part1: cf_reboot true");
 		main_loop_once();
+	}
 
 	event_base_free(pgb_event_base);
 	pgb_event_base = evtmp;
@@ -770,9 +772,13 @@ static void takeover_part1(void)
 
 void dns_setup(void)
 {
-	if (adns)
+	log_info("dns_setup()");
+	if (adns) {
+		log_info("already got a adns context");
 		return;
+	}
 	adns = adns_create_context();
+	log_info("created new adns context");
 	if (!adns)
 		die("dns setup failed");
 }
@@ -925,6 +931,7 @@ int main(int argc, char *argv[])
 	admin_setup();
 
 	if (cf_reboot) {
+		log_info("cf_reboot enabled");
 		if (check_old_process_unix()) {
 			takeover_part1();
 			did_takeover = true;

@@ -1,7 +1,7 @@
 Summary: Lightweight connection pooler for PostgreSQL
 Name: pgbouncer
 Version: 1.14.0
-Release: 1%{?dist}
+Release: 3%{?dist}
 License: ISC
 Group: Database
 Source: pgbouncer-%{version}.tar.gz
