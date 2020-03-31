@@ -768,7 +768,7 @@ static void takeover_part1(void)
 	pgb_event_base = evtmp;
 }
 
-static void dns_setup(void)
+void dns_setup(void)
 {
 	if (adns)
 		return;
