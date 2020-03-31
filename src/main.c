@@ -749,7 +749,7 @@ static void takeover_part1(void)
 	event_base_free(evtmp);
 }
 
-static void dns_setup(void)
+void dns_setup(void)
 {
 	if (adns)
 		return;

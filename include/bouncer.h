@@ -524,6 +524,8 @@ extern usec_t g_suspend_start;
 extern struct DNSContext *adns;
 extern struct HBA *parsed_hba;
 
+void dns_setup();
+
 static inline PgSocket * _MUSTCHECK
 pop_socket(struct StatList *slist)
 {
