@@ -956,6 +956,7 @@ static bool admin_cmd_reload(PgSocket *admin, const char *arg)
 
 	log_info("RELOAD command issued");
 	load_config();
+	log_info("admin_cmd_reload() returned from load_config()");
 	return admin_ready(admin, "RELOAD");
 }
 

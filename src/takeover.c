@@ -191,6 +191,8 @@ static void takeover_postprocess_fds(void)
 	PgSocket *client;
 	PgPool *pool;
 
+	log_info("takeover_postprocess_fds()");
+
 	statlist_for_each(item, &pool_list) {
 		pool = container_of(item, PgPool, head);
 		if (pool->db->admin)

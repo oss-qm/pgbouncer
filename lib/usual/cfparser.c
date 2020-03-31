@@ -272,6 +272,8 @@ bool cf_set(const struct CfContext *cf, const char *sect, const char *key, const
 	void *base, *p;
 	struct CfValue cv;
 
+	log_info("cf_set() sect=%s key=%s val=%s", sect, key, val);
+
 	/* find section */
 	s = find_sect(cf, sect);
 	if (!s) {

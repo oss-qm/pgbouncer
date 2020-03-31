@@ -744,8 +744,10 @@ static void takeover_part1(void)
 		fatal("cannot reboot if unix dir not configured");
 
 	takeover_init();
-	while (cf_reboot)
+	while (cf_reboot) {
+		log_info("takeover_part1: cf_reboot true");
 		main_loop_once();
+	}
 	event_base_free(evtmp);
 }
 
@@ -899,6 +901,7 @@ int main(int argc, char *argv[])
 	admin_setup();
 
 	if (cf_reboot) {
+		log_info("cf_reboot enabled");
 		if (check_old_process_unix()) {
 			takeover_part1();
 			did_takeover = true;
